@@ -44,7 +44,7 @@ router.patch('/:username', function(req, res, next) {
         "gender": jsonContent[i].gender,
         "address": jsonContent[i].address
       };
-      fs.writeFile('./data/author.json', JSON.stringify(jsonContent), 'utf-8');
+      fs.writeFile('./data/author.json', JSON.stringify(jsonContent, null, 4), 'utf-8');
       res.send(authorObj);
       break;
     } else {
