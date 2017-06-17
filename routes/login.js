@@ -9,22 +9,25 @@ router.post('/', function(req, res, next) {
   let contents = fs.readFileSync("./data/author.json");
   let jsonContent = JSON.parse(contents);
   for(let i = 0; i < jsonContent.length; i++) {
-    
-  }
-  /*if(username == 'minecola' && password == 'abc123') {
-    let contents = fs.readFileSync("./data/author.json");
-    let jsonContent = JSON.parse(contents);
-    res.cookie('passKey' , username).send(jsonContent);
-  } else {
-      let errorObj = {
-          "message": "帳號密碼錯誤！"
+    if(jsonContent[i].username == username && jsonContent[i].password == password) {
+      let authorObj = {
+        "uesrname": jsonContent[i].username,
+        "name": jsonContent[i].name,
+        "gender": jsonContent[i].gender,
+        "address": jsonContent[i].address
       };
-      res.send(errorObj);
-  }*/
+      res.cookie('passKey' , jsonContent[i].username).send(authorObj);
+    } else if(jsonContent.length - 1 == i) {
+        let errorObj = {
+            "message": "帳號密碼錯誤"
+        };
+        res.send(errorObj);
+    }
+  }
 });
 
 router.put('/', function(req, res, next) {
-  if(req.cookies.passKey == 'minecola'){
+  if(req.cookies.passKey){
     let successObj = {
       "message": "成功登出"
     };
