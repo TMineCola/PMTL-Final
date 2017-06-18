@@ -19,7 +19,7 @@ router.get('/:username', function(req, res, next) {
     } else {
       if(i == jsonContent.length - 1) {
         let errorObj = {
-          "message": "author not found"
+          "message": "找不到該使用者帳號"
         };
         res.send(errorObj);
       }
@@ -50,7 +50,7 @@ router.patch('/:username', function(req, res, next) {
     } else {
       if(i == jsonContent.length - 1) {
         let errorObj = {
-          "message": "author not found"
+          "message": "找不到該使用者帳號"
         };
         res.send(errorObj);
       }
