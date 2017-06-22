@@ -2,6 +2,37 @@ var express = require('express');
 var router = express.Router();
 var fs = require("fs");
 
+router.get('/', function(req, res, next) {
+  let contents = fs.readFileSync("./data/author.json");
+  let jsonContent = JSON.parse(contents);
+  if(req.cookies.passKey) {
+    for(let i = 0; i < jsonContent.length; i++) {
+      if(jsonContent[i].username == req.cookies.passKey) {
+        let authorObj = {
+          "uesrname": jsonContent[i].username,
+          "name": jsonContent[i].name,
+          "gender": jsonContent[i].gender,
+          "address": jsonContent[i].address
+        };
+        res.send(authorObj);
+        break;
+      } else {
+        let errorObj = {
+          "message": "Cookie使用者名稱錯誤"
+        };
+        res.send(errorObj);
+        break;
+      }
+    }
+  } else {
+    let errorObj = {
+      "message": "請先登入"
+    };
+    res.send(errorObj);
+    return;
+  }
+});
+
 router.post('/', function(req, res, next) {
   let postObj = req.body;
   let username = postObj.username;
