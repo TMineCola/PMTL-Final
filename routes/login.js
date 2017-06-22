@@ -3,6 +3,8 @@ var router = express.Router();
 var fs = require("fs");
 
 router.get('/', function(req, res, next) {
+  console.log(req.headers);
+  console.log(req.headers['content-type']);
   let contents = fs.readFileSync("./data/author.json");
   let jsonContent = JSON.parse(contents);
   if(req.cookies.passKey) {
