@@ -6,6 +6,13 @@ router.get('/:username', function(req, res, next) {
   let contents = fs.readFileSync("./data/author.json");
   let jsonContent = JSON.parse(contents);
   let target = req.params.username;
+  if(!req.cookies.passKey) {
+    let errorObj = {
+      "message": "請先登入"
+    };
+    res.send(errorObj);
+    return;
+  }
   for(let i = 0; i < jsonContent.length; i++) {
     if(jsonContent[i].username == target) {
       let authorObj = {
@@ -32,6 +39,13 @@ router.patch('/:username', function(req, res, next) {
   let jsonContent = JSON.parse(contents);
   let target = req.params.username;
   let postObj = req.body;
+  if(!req.cookies.passKey) {
+    let errorObj = {
+      "message": "請先登入"
+    };
+    res.send(errorObj);
+    return;
+  }
   for(let i = 0; i < jsonContent.length; i++) {
     if(jsonContent[i].username == target) {
       jsonContent[i].name = postObj.name;
