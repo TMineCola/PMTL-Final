@@ -7,6 +7,11 @@ var fs = require("fs");
 
 //get full posts
 router.get('/', function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', req.headers['host']);
+  res.setHeader('Access-Control-Allow-Headers', req.headers['accept']);
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  console.log(session);
   let contents = fs.readFileSync("./data/posts.json");
   let jsonContent = JSON.parse(contents);
   res.send(jsonContent);
@@ -14,6 +19,10 @@ router.get('/', function(req, res, next) {
 
 //create a post with login status
 router.post('/', function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', req.headers['host']);
+  res.setHeader('Access-Control-Allow-Headers', req.headers['accept']);
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   let contents = fs.readFileSync("./data/posts.json");
   let authorContents = fs.readFileSync("./data/author.json");
   let jsonContent = JSON.parse(contents);
@@ -64,6 +73,10 @@ router.post('/', function(req, res, next) {
 
 //get target id post
 router.get('/:id', function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', req.headers['host']);
+  res.setHeader('Access-Control-Allow-Headers', req.headers['accept']);
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   let contents = fs.readFileSync("./data/posts.json");
   let jsonContent = JSON.parse(contents);
   let target = req.params.id;
@@ -84,6 +97,10 @@ router.get('/:id', function(req, res, next) {
 
 //patch for update
 router.patch('/:id', function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', req.headers['host']);
+  res.setHeader('Access-Control-Allow-Headers', req.headers['accept']);
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Methods', 'PATCH, OPTIONS');
   let contents = fs.readFileSync("./data/posts.json");
   let authorContents = fs.readFileSync("./data/author.json");
   let jsonContent = JSON.parse(contents);
@@ -128,6 +145,10 @@ router.patch('/:id', function(req, res, next) {
 });
 
 router.delete('/:id', function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', req.headers['host']);
+  res.setHeader('Access-Control-Allow-Headers', req.headers['accept']);
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Methods', 'DELETE, OPTIONS');
   let contents = fs.readFileSync("./data/posts.json");
   let authorContents = fs.readFileSync("./data/author.json");
   let jsonContent = JSON.parse(contents);
