@@ -3,10 +3,6 @@ var router = express.Router();
 var fs = require("fs");
 
 router.get('/:username', function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', req.headers['host']);
-  res.setHeader('Access-Control-Allow-Headers', req.headers['accept']);
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   let contents = fs.readFileSync("./data/author.json");
   let jsonContent = JSON.parse(contents);
   let target = req.params.username;
@@ -39,10 +35,6 @@ router.get('/:username', function(req, res, next) {
 });
 
 router.patch('/:username', function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', req.headers['host']);
-  res.setHeader('Access-Control-Allow-Headers', req.headers['accept']);
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Methods', 'PATCH, OPTIONS');
   let contents = fs.readFileSync("./data/author.json");
   let jsonContent = JSON.parse(contents);
   let target = req.params.username;
