@@ -25,12 +25,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.options(cors());
-  
-app.use('/', index);
-app.use('/login', login);
-app.use('/author', author);
-app.use('/posts', posts);
+var corsConfig = {
+  origin: true,
+  method: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  credentials: true
+};
+
+app.use('/login', cors(corsConfig), login);
+app.use('/author', cors(corsConfig), author);
+app.use('/posts', cors(corsConfig), posts);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
