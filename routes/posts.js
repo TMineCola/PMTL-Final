@@ -5,6 +5,24 @@ var fs = require("fs");
 //一開始沒有多想, 寫完才發現很多地方可以用function處理... ex: 算文章最後的id, 驗證登入, 驗證cookie, 比對author ...
 //pardon me please~ QQ 
 
+//fixed toISOString not return a local time
+Date.prototype.toIsoString = function() {
+    var tzo = -this.getTimezoneOffset(),
+        dif = tzo >= 0 ? '+' : '-',
+        pad = function(num) {
+            var norm = Math.abs(Math.floor(num));
+            return (norm < 10 ? '0' : '') + norm;
+        };
+    return this.getFullYear() +
+        '-' + pad(this.getMonth() + 1) +
+        '-' + pad(this.getDate()) +
+        'T' + pad(this.getHours()) +
+        ':' + pad(this.getMinutes()) +
+        ':' + pad(this.getSeconds()) +
+        dif + pad(tzo / 60) +
+        ':' + pad(tzo % 60);
+}
+
 //get full posts
 router.get('/', function(req, res, next) {
   let contents = fs.readFileSync("./data/posts.json");
@@ -34,13 +52,13 @@ router.post('/', function(req, res, next) {
   }
   for(let i = 0; i < jsonAuthorContent.length; i++) {
     if(req.cookies.passKey == jsonAuthorContent[i].username) {
-      let date = new Date();
+      let date = new Date().toIsoString();
       let dataObj = {
         "id": postID + 1,
         "title": postObj.title,
         "content": postObj.content,
-        "created_at": date.toISOString(),
-        "updated_at": date.toISOString(),
+        "created_at": date,
+        "updated_at": date,
         "author": {
           "username": jsonAuthorContent[i].username,
           "name": jsonAuthorContent[i].name,
@@ -101,10 +119,10 @@ router.patch('/:id', function(req, res, next) {
     if(jsonContent[i].id == target) {
       for(let j = 0; j < jsonAuthorContent.length; j++) {
         if(jsonAuthorContent[j].username == jsonContent[i].author.username) {
-          let date = new Date();
+          let date = new Date().toIsoString();
           jsonContent[i].title = postObj.title;
           jsonContent[i].content = postObj.content;
-          jsonContent[i].updated_at = date.toISOString();
+          jsonContent[i].updated_at = date;
           jsonContent[i].tags = postObj.tags;
           fs.writeFile('./data/posts.json', JSON.stringify(jsonContent, null, 4), 'utf-8');
           res.send(jsonContent[i]);
