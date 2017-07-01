@@ -6,9 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var index = require('./routes/index');
 var login = require('./routes/login');
-var author = require('./routes/author');
+var authors = require('./routes/authors');
 var posts = require('./routes/posts');
 
 var app = express();
@@ -32,7 +31,7 @@ var corsConfig = {
 };
 
 app.use('/login', cors(corsConfig), login);
-app.use('/author', cors(corsConfig), author);
+app.use('/authors', cors(corsConfig), authors);
 app.use('/posts', cors(corsConfig), posts);
 
 // catch 404 and forward to error handler
